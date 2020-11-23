@@ -19,14 +19,17 @@ const NewsItem = ({
   currentNews,
   loading,
   error,
+  getCommentsList,
   clearCurrentNewsItem,
   getNewsItemWithComments,
-  currentNewsItemSuccess,
 }) => {
   const { id } = useParams();
-  const newsItem = currentNews || news.find((item) => item.id === +id);
-  const { title, by, url, time, descendants } = newsItem || {};
-  const { comments } = currentNews || {};
+  const newsItem =
+    currentNews && +id === currentNews.id
+      ? currentNews
+      : news.find((item) => item.id === +id);
+  const { title, by, url, time, descendants, kids } = newsItem || {};
+  const { comments } = newsItem || {};
 
   const hasComments = !!comments && !!comments.length;
   const loader =
@@ -35,8 +38,11 @@ const NewsItem = ({
   const errorIndicator = error ? <ErrorIndicator /> : null;
 
   useEffect(() => {
-    currentNewsItemSuccess(newsItem);
-    getNewsItemWithComments(id);
+    if (!currentNews || +id !== currentNews.id) {
+      getNewsItemWithComments(id);
+    } else if (currentNews && +id === currentNews.id && kids && kids.length) {
+      getCommentsList(kids);
+    }
 
     const interval = setInterval(() => {
       getNewsItemWithComments(id);
@@ -86,7 +92,7 @@ const NewsItem = ({
         <Icon name="comments" />
         {descendants}
       </p>
-      {!!descendants && (
+      {(!!descendants || hasComments) && (
         <Button
           primary
           disabled={loading}

@@ -158,6 +158,8 @@ export function getNewsItemWithComments(id) {
       dispatch(currentNewsItemSuccess(data));
       if (data.kids && data.kids.length) {
         dispatch(getCommentsList(data.kids));
+      } else {
+        dispatch(commentsListSuccess([]));
       }
     });
   };
