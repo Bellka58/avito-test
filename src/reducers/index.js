@@ -77,6 +77,12 @@ const reducer = (state = initialState, action) => {
           ...action.payload,
         },
       };
+    case CURRENT_NEWS_ITEM_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     case COMMENTS_LIST_REQUEST:
       return {
         ...state,
@@ -89,12 +95,6 @@ const reducer = (state = initialState, action) => {
         loading: false,
         error: null,
         currentNews: { ...state.currentNews, comments: action.payload },
-      };
-    case CURRENT_NEWS_ITEM_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
       };
     case CLEAR_CURRENT_NEWS_ITEM:
       return {

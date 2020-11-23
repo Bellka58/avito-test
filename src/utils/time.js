@@ -1,4 +1,5 @@
 export function getFormattedTime(time) {
+  if (!time) return '';
   const d = new Date(time * 1000);
   const months = [
     'January',
