@@ -8,7 +8,7 @@ import {
   COMMENTS_LIST_REQUEST,
   COMMENTS_LIST_SUCCESS,
   COMMENTS_LIST_FAILURE,
-  CLEAR_COMMENTS_LIST,
+  CLEAR_CURRENT_NEWS_ITEM,
   CURRENT_NEWS_ITEM_SUCCESS,
   CURRENT_NEWS_ITEM_REQUEST,
 } from '../constants/actions';
@@ -74,9 +74,9 @@ export function commentsListFailure(error) {
   };
 }
 
-export function clearCommentsList() {
+export function clearCurrentNewsItem() {
   return {
-    type: CLEAR_COMMENTS_LIST,
+    type: CLEAR_CURRENT_NEWS_ITEM,
   };
 }
 

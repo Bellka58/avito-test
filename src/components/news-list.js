@@ -8,12 +8,10 @@ import { getNewsList } from '../actions';
 import { ParagraphLoader } from './shared';
 import NewsListItem from './news-list-item';
 
-const NewsList = ({ news, newsIds, getNewsList, loading }) => {
+const NewsList = ({ news, getNewsList, loading }) => {
   useEffect(() => {
     getNewsList();
-  }, []);
 
-  useEffect(() => {
     const interval = setInterval(() => {
       getNewsList();
     }, 60000);
@@ -21,7 +19,7 @@ const NewsList = ({ news, newsIds, getNewsList, loading }) => {
     return () => {
       clearInterval(interval);
     };
-  }, [newsIds]);
+  }, []);
 
   const handleUpdate = () => {
     getNewsList();
@@ -66,7 +64,6 @@ const NewsList = ({ news, newsIds, getNewsList, loading }) => {
 
 const mapStateToProps = (state) => ({
   news: state.news,
-  newsIds: state.newsIds,
   loading: state.loading,
 });
 

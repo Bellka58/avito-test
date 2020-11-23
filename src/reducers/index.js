@@ -9,7 +9,7 @@ import {
   COMMENTS_LIST_SUCCESS,
   CURRENT_NEWS_ITEM_REQUEST,
   CURRENT_NEWS_ITEM_SUCCESS,
-  CLEAR_COMMENTS_LIST,
+  CLEAR_CURRENT_NEWS_ITEM,
 } from '../constants/actions';
 
 const initialState = {
@@ -78,7 +78,7 @@ const reducer = (state = initialState, action) => {
         loading: false,
         currentNews: { ...state.currentNews, comments: action.payload },
       };
-    case CLEAR_COMMENTS_LIST:
+    case CLEAR_CURRENT_NEWS_ITEM:
       return {
         ...state,
         currentNews: null,

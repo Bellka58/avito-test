@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { Button, Comment, Container, Header, Icon } from 'semantic-ui-react';
 
-import { clearCommentsList, getNewsItemWithComments } from '../actions';
+import {
+  clearCurrentNewsItem,
+  currentNewsItemSuccess,
+  getCommentsList,
+  getNewsItemWithComments,
+} from '../actions';
 import { MAIN_PAGE } from '../constants/paths';
 import { getFormattedTime } from '../utils/time';
 import CommentsListItem from './comments-list-item';
@@ -13,8 +18,10 @@ const NewsItem = ({
   news,
   currentNews,
   loading,
-  clearCommentsList,
+  clearCurrentNewsItem,
   getNewsItemWithComments,
+  getCommentsList,
+  currentNewsItemSuccess,
 }) => {
   const { id } = useParams();
   const newsItem = currentNews || news.find((item) => item.id === +id);
@@ -26,13 +33,15 @@ const NewsItem = ({
     !!descendants && !hasComments && loading ? <ParagraphLoader /> : null;
 
   useEffect(() => {
+    currentNewsItemSuccess(newsItem);
     getNewsItemWithComments(id);
+
     const interval = setInterval(() => {
       getNewsItemWithComments(id);
     }, 60000);
 
     return () => {
-      clearCommentsList();
+      clearCurrentNewsItem();
       clearInterval(interval);
     };
   }, []);
@@ -105,8 +114,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  clearCommentsList: () => dispatch(clearCommentsList()),
+  clearCurrentNewsItem: () => dispatch(clearCurrentNewsItem()),
   getNewsItemWithComments: (id) => dispatch(getNewsItemWithComments(id)),
+  getCommentsList: (id) => dispatch(getCommentsList(id)),
+  currentNewsItemSuccess: (data) => dispatch(currentNewsItemSuccess(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsItem);

@@ -6,7 +6,7 @@ import NewsList from './news-list';
 import NewsItem from './news-item';
 
 const App = () => (
-  <div>
+  <div className="app">
     <Router>
       <Route exact path={MAIN_PAGE} component={NewsList} />
       <Route path={`${NEWS_PAGE}/:id`} component={NewsItem} />
