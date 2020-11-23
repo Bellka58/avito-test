@@ -71,14 +71,16 @@ const NewsItem = ({
         <Icon name="comments" />
         {descendants}
       </p>
-      <Button
-        primary
-        disabled={loading}
-        loading={loading}
-        onClick={handleUpdate}
-      >
-        Update
-      </Button>
+      {!!descendants && (
+        <Button
+          primary
+          disabled={loading}
+          loading={loading}
+          onClick={handleUpdate}
+        >
+          Update
+        </Button>
+      )}
       <Comment.Group>
         {loader}
         {hasComments &&

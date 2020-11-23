@@ -124,7 +124,9 @@ export function getCommentsList(commentsIds) {
       .then((res) => {
         dispatch(
           commentsListSuccess(
-            res.map(({ data }) => data).filter(({ deleted }) => !deleted)
+            res
+              .map(({ data }) => data)
+              .filter(({ deleted, dead }) => !deleted && !dead)
           )
         );
       })
