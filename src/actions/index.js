@@ -11,6 +11,7 @@ import {
   CLEAR_CURRENT_NEWS_ITEM,
   CURRENT_NEWS_ITEM_SUCCESS,
   CURRENT_NEWS_ITEM_REQUEST,
+  CURRENT_NEWS_ITEM_FAILURE,
 } from '../constants/actions';
 import { newsListApi, itemApi } from '../api';
 
@@ -90,6 +91,13 @@ export function currentNewsItemSuccess(data) {
   return {
     type: CURRENT_NEWS_ITEM_SUCCESS,
     payload: data,
+  };
+}
+
+export function currentNewsItemFailure(err) {
+  return {
+    type: CURRENT_NEWS_ITEM_FAILURE,
+    payload: err,
   };
 }
 

@@ -5,10 +5,10 @@ import { Button, Container } from 'semantic-ui-react';
 
 import { NEWS_PAGE } from '../constants/paths';
 import { getNewsList } from '../actions';
-import { ParagraphLoader } from './shared';
+import { ErrorIndicator, ParagraphLoader } from './shared';
 import NewsListItem from './news-list-item';
 
-const NewsList = ({ news, getNewsList, loading }) => {
+const NewsList = ({ news, getNewsList, loading, error }) => {
   useEffect(() => {
     getNewsList();
 
@@ -28,11 +28,15 @@ const NewsList = ({ news, getNewsList, loading }) => {
   const history = useHistory();
 
   const handleRoute = (id) => {
-    history.push(`${NEWS_PAGE + '/' + id}`);
+    history.push(`${NEWS_PAGE}/${id}`);
   };
 
   const loader =
     (!news || !news.length) && loading ? <ParagraphLoader /> : null;
+
+  if (error) {
+    return <ErrorIndicator />;
+  }
 
   return (
     <Container>
@@ -65,6 +69,7 @@ const NewsList = ({ news, getNewsList, loading }) => {
 const mapStateToProps = (state) => ({
   news: state.news,
   loading: state.loading,
+  error: state.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({

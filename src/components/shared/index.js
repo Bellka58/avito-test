@@ -1,3 +1,4 @@
-const { ParagraphLoader } = require('./paragraph-loader');
+import { ParagraphLoader } from './paragraph-loader';
+import { ErrorIndicator } from './error-indicator';
 
-export { ParagraphLoader };
+export { ParagraphLoader, ErrorIndicator };

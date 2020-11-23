@@ -12,15 +12,15 @@ import {
 import { MAIN_PAGE } from '../constants/paths';
 import { getFormattedTime } from '../utils/time';
 import CommentsListItem from './comments-list-item';
-import { ParagraphLoader } from './shared/paragraph-loader';
+import { ErrorIndicator, ParagraphLoader } from './shared';
 
 const NewsItem = ({
   news,
   currentNews,
   loading,
+  error,
   clearCurrentNewsItem,
   getNewsItemWithComments,
-  getCommentsList,
   currentNewsItemSuccess,
 }) => {
   const { id } = useParams();
@@ -31,6 +31,8 @@ const NewsItem = ({
   const hasComments = !!comments && !!comments.length;
   const loader =
     !!descendants && !hasComments && loading ? <ParagraphLoader /> : null;
+
+  const errorIndicator = error ? <ErrorIndicator /> : null;
 
   useEffect(() => {
     currentNewsItemSuccess(newsItem);
@@ -54,6 +56,10 @@ const NewsItem = ({
   const handleRoute = () => {
     history.push(MAIN_PAGE);
   };
+
+  if (error) {
+    <ErrorIndicator />;
+  }
 
   if (!newsItem && loading) {
     return <ParagraphLoader />;
@@ -92,6 +98,7 @@ const NewsItem = ({
       )}
       <Comment.Group>
         {loader}
+        {errorIndicator}
         {hasComments &&
           comments.map(({ id, text, kids, by, time }) => (
             <CommentsListItem
@@ -111,6 +118,7 @@ const mapStateToProps = (state) => ({
   news: state.news,
   currentNews: state.currentNews,
   loading: state.loading,
+  error: state.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
